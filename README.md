@@ -57,3 +57,4 @@
    4. Publish the ContactManagementServices project code to any hosting environment
    5. Browse the application as per below example Swagger URL for API details
       http://localhost:portnumber/swagger/index.html
+   6. From client side, send 'ApiKey' with value as '$B&E)H@McQfTjWnZq4t7w!z%C*F-JaNdRgUkXp2s5v8x/A?D(G+KbPeShVmYq3t6' for calling any action method of contact services in     request header   
