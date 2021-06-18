@@ -1,8 +1,5 @@
 # PublicRepository
 
-
-
-
 # Contact Management Services
 	
 ## Project Description:
@@ -40,17 +37,17 @@
 
 ## Solution Structure
 
-![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/SolutionStructure.PNG)
+![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/SolutionStructure.JPG)
  
 
 ## Database Design
 
-![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/DatabaseDesign.PNG)
+![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/DatabaseDesign.JPG)
 
 
 ## Contact Services Swagger UI 
 
-![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/SwaggerUI.PNG)
+![Alt text]( https://github.com/riteshkoshti/PublicRepository/blob/master/SwaggerUI.JPG)
  
 
 ## Deployment Instructions
@@ -60,21 +57,3 @@
    4. Publish the ContactManagementServices project code to any hosting environment
    5. Browse the application as per below example Swagger URL for API details
       http://localhost:portnumber/swagger/index.html
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
