@@ -25,7 +25,7 @@ namespace UnitTests
         public ContactManagementServicesTests()
         {
             ILogger<ContactController> _logger = new Mock<ILogger<ContactController>>().Object;
-            string connectionString = "************Put Your Environment Connection String****************";
+            string connectionString = "Server=***;Database=Organization;User Id=*****;Password=*******;Trusted_Connection=True;";
             var options = new DbContextOptionsBuilder<OrganizationContext>()
             .UseSqlServer(connectionString)
             .Options;
@@ -34,6 +34,20 @@ namespace UnitTests
             IRepository _contactAsyncRepository =  new Repository<OrganizationContext>(_organizationContext);
 
             _contactController = new ContactController(_logger, _contactAsyncRepository);
+        }
+
+        /// <summary>
+        /// Check service health
+        /// </summary>
+        [TestMethod]
+        public void TC_CheckServiceHealth()
+        {
+            // Arrange
+            var result = _contactController.CheckHealth() as OkResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.StatusCode);
         }
 
         /// <summary>
@@ -66,13 +80,27 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Get contact by invalid id
+        /// </summary>
+        [TestMethod]
+        public async Task TC_GetContactByInvalidIdAsync()
+        {
+            // Arrange
+            var result = await _contactController.GetById(9999999999999) as NotFoundResult;
+            
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(404, result.StatusCode);
+        }
+
+        /// <summary>
         /// Create a contact
         /// </summary>
         [TestMethod]
         public async Task TC_CreateContactAsync()
         {
             // Arrange
-            Random generator = new Random();
+            Random generator = new();
             string name = "Test" + generator.Next(0, 10000000);
 
             var contact = new Contact()
@@ -91,6 +119,31 @@ namespace UnitTests
 
             // Assert
             Assert.IsNotNull(newContact);
+        }
+
+        /// <summary>
+        /// Create a contact with invalid data as per maximum length allowed
+        /// </summary>
+        [TestMethod]
+        public async Task TC_CreateContactWithMoreThanMaxLengthDataAsync()
+        {
+            // Arrange
+            string name = "TestNameTestNameTestNameTestNameTestNameTestNameTestNameTestNameTestNameTestNameTestNameTestName";
+
+            var contact = new Contact()
+            {
+                FirstName = name,   // maxlength - 30
+                LastName = name,    // maxlength - 30
+                Email = name + "@test.com", // maxlength - 50
+                Status = true
+            };
+
+            // Act
+            var result = await _contactController.CreateAsync(contact) as BadRequestObjectResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(400, result.StatusCode);
         }
 
         /// <summary>
@@ -133,6 +186,20 @@ namespace UnitTests
             // Assert
             Assert.IsNotNull(deleteContact);
             Assert.IsTrue(!deleteContact.Status);
+        }
+
+        /// <summary>
+        /// Inactivate a contact by invalid Id
+        /// </summary>
+        [TestMethod]
+        public async Task TC_DeleteContactByInvalidIdAsync()
+        {
+            // Arrange
+            var result = await _contactController.DeleteAsync(99999999999) as NotFoundResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(404, result.StatusCode);
         }
     }
 }

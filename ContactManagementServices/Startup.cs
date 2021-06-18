@@ -24,9 +24,10 @@ namespace ContactManagementServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact Services", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact Services", Version = "v1" });
             });
 
             string connectionString = Configuration.GetConnectionString("organzationDB");
@@ -47,6 +48,8 @@ namespace ContactManagementServices
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

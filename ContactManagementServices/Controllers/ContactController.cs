@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Interfaces;
+﻿using ContactManagementServices.Attributes;
+using DataAccessLayer.Interfaces;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace ContactManagementServices.Controllers
 {
     [ApiController] 
     [Route("[controller]")]
+    [ApiKey]
     public class ContactController : Controller
     {
         private readonly ILogger<ContactController> _logger;
@@ -104,7 +106,7 @@ namespace ContactManagementServices.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.ToString());
-                    return BadRequest($"Failed to get response : { ex.Message}");
+                    return BadRequest($"Failed to get response : { ex }");
                 }
             }
 
